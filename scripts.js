@@ -4,6 +4,7 @@ function removeError(element) {
 }
 
 const submit = document.getElementById('submit');
+const tbody = document.getElementById('tbody');
 
 const tasks = [];
 
@@ -31,15 +32,31 @@ submit.addEventListener('click', function () {
     }
   }
 
-  // setData(tasks);
+  setData(tasks);
   console.log('click', tasks);
 });
 
 function setData(arr) {
-  if(arr.length > 0) {
+  if (arr.length > 0) {
     let tmp = '';
-      for(let i = 0; i < arr.length; i++) {
-        tmp += renderItem(arr[i]);
-      }
+    for (let i = 0; i < arr.length; i++) {
+      tmp += renderItem(i, arr[i]);
+    }
+    tbody.innerHTML = tmp;
   }
+}
+
+function renderItem(i, item) {
+  return `
+    <tr>
+      <th scope="row">${i + 1}</th>
+      <td>${item.title}</td>
+      <td>${item.description}</td>
+      <td>${item.date}</td>
+      <td>
+        <i data-id="${i}" data-type="edit" class="fas fa-edit"></i>
+        <i data-id="${i}" data-type="remove" class="far fa-trash-alt"></i>
+      </td>
+    </tr>
+  `;
 }
